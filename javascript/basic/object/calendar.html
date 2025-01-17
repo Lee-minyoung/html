@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  년도: <input name="year" type="number" style="width: 30px;" >
+  월: <input name="month" type="number" style="width: 20px;">  <button>📅</button>
+  <p>
+  <div id="show"></div>
+  
+  
+  <!-- <table border="1">
+    <thead></thead>
+    <tbody id="list">
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+      </tr>
+    </tbody>
+  </table>-->
+
+  <script>
+    let holydays=[{
+      month: 1,
+      days:[1, 2, 3]
+    }, {
+      month: 2,
+      days: [5, 8, 12]
+    }, {
+      month: 3,
+      days: [1, 10, 15]
+    }]
+    
+    //달력버튼 클릭하면 월정보를 입력받아서 출력
+    document.querySelector('button').addEventListener('click', function(){
+      let year = document.querySelector('input[name="year"]').value;
+      let month = document.querySelector('input[name="month"]').value;
+      console.log(month);
+      makeCalendar(year, month);
+    })
+
+    //월정보를 알려주면 공백 반환
+    
+
+    //월정보를 알려주면 말일 반환.
+    
+    makeCalendar();
+    //달력출력함수.
+    function makeCalendar(year = 2025, month = 1){
+      let now = new Date();  //2025, 1, 17
+      //년도, 월 지정
+      now.setFullYear(year);
+      now.setMonth(month-1);
+      now.setDate(1);
+      let spaces = now.getDay();  // 1일의 위치(공백).
+
+      now.setMonth(month);
+      now.setDate(0);
+      let lastDate = now.getDate();  // 월의 말일.
+
+    let days = ['일', '월', '화', '수', '목', '금', '토'];
+
+    //html 작성하는 부분 시작.
+    let html='';
+    html += '<table border="1">';
+    html += `<caption>${year}년${month}월</caption>`;
+    html += '<thead><tr>';
+    for(let day of days){
+      html += `<th>${day}</th>`;
+    }
+    html += '</tr></thead>';
+    html += '<tbody id="list"><tr>';
+    // 공백
+    for(let i=0; i<spaces; i++){
+      html += `<td>`
+    }
+    // 날짜출력
+    for(let i = 1; i <= lastDate; i++){
+
+      if((i + spaces) % 7 == 0){  //토요일
+        html +=`<td style="background-color:blue; color: white;">${i}</td>`;
+      } 
+      else if((i + spaces) % 7 == 1){  //일요일
+        html +=`<td style="background-color:red; color: white;">${i}</td>`;
+      }
+      else{
+        html +=`<td>${i}</td>`;
+      }
+      //토요일마다 줄바꿈
+      if((i + spaces) % 7 == 0){
+        html += '</tr><tr>'; 
+
+    }
+  }
+    
+  
+    html += '</tbody>';
+    html += '</table>';
+
+
+    
+
+      document.querySelector('#show').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

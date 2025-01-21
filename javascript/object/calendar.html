@@ -7,8 +7,8 @@
 </head>
 
 <body>
-  년도: <input name="year" type="number" style="width: 30px;" >
-  월: <input name="month" type="number" style="width: 20px;">  <button>📅</button>
+  년도: <input name="year" type="number" style="width: 50px;" >
+  월: <input name="month" type="number" style="width: 30px;">  <button>📅</button>
   <p>
   <div id="show"></div>
   
@@ -56,8 +56,24 @@
     makeCalendar();
     //달력출력함수.
     function makeCalendar(year = 2025, month = 1){
-      let now = new Date();  //2025, 1, 17
+      
+
+    //월의 공휴일 날짜만 가져오기
+    let holyAry = holydays.filter(function (item, idx, ary){
+      if(item.month == month){
+        return true;
+      }
+      return false;
+    });
+
+    holyAry = [{
+      month:1,
+      days:[1,2,3]
+    }];
+    
       //년도, 월 지정
+      let now = new Date();  //2025, 1, 17
+
       now.setFullYear(year);
       now.setMonth(month-1);
       now.setDate(1);
@@ -85,10 +101,12 @@
     }
     // 날짜출력
     for(let i = 1; i <= lastDate; i++){
-
-      if((i + spaces) % 7 == 0){  //토요일
-        html +=`<td style="background-color:blue; color: white;">${i}</td>`;
+      if(holyAry.length>0 && holyAry[0].days.indexOf(i) != -1){
+        html +=`<td style="background-color:pink; color: white;">${i}</td>`;
       } 
+      else if((i + spaces) % 7 == 0){  //토요일
+        html +=`<td style="background-color:blue; color: white;">${i}</td>`;
+      }
       else if((i + spaces) % 7 == 1){  //일요일
         html +=`<td style="background-color:red; color: white;">${i}</td>`;
       }

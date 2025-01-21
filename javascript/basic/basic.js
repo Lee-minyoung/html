@@ -8,4 +8,4 @@ console.log(myName == "user01");
 console.log(myAge == 30);
 
 console.log("내 이름은 " + myObj.name +"입니다.");  // "user02"
-console.log(myObj.age + 3);  // 25
+console.log(myObj.age + 3);  // 
